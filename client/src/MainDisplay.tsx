@@ -8,12 +8,14 @@ const MainDisplay = ({ playerChoice }: PlayerChoiceProps) => {
   const [number, setNumber] = useState<number>(0);
   const [wins, setWins] = useState<number>(0);
   const [losses, setLosses] = useState<number>(0);
+  const [hasUpdatedResult, setHasUpdatedResult] = useState<boolean>(false);
 
   useEffect(() => {
     if (playerChoice === undefined) return;
 
     setComputerChoice(undefined);
     setNumber(0);
+    setHasUpdatedResult(false);
 
     const interval = setInterval(() => {
       setNumber((prevNumber) => {
@@ -47,22 +49,26 @@ const MainDisplay = ({ playerChoice }: PlayerChoiceProps) => {
   };
 
   useEffect(() => {
-    if (number == 10 && playerChoice && computerChoice) {
+    if (number === 10 && playerChoice && computerChoice && !hasUpdatedResult) {
       if (
         (playerChoice === "rock" && computerChoice === "scissors") ||
         (playerChoice === "paper" && computerChoice === "rock") ||
         (playerChoice === "scissors" && computerChoice === "paper")
       ) {
         setWins((prev) => prev + 1);
+        setHasUpdatedResult(true);
       } else if (
         (computerChoice === "rock" && playerChoice === "scissors") ||
         (computerChoice === "paper" && playerChoice === "rock") ||
         (computerChoice === "scissors" && playerChoice === "paper")
       ) {
         setLosses((prev) => prev + 1);
+        setHasUpdatedResult(true);
+      } else {
+        setHasUpdatedResult(true);
       }
     }
-  }, [number, playerChoice, computerChoice]);
+  }, [number, playerChoice, computerChoice, hasUpdatedResult]);
 
   const result = () => {
     if (playerChoice && computerChoice) {
