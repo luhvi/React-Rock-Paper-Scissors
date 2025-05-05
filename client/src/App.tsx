@@ -8,14 +8,22 @@ function App() {
   const [playerChoice, setPlayerChoice] = useState<
     undefined | "rock" | "paper" | "scissors"
   >();
+  const [playerHasChosen, setPlayerHasChosen] = useState<boolean>(false);
 
   return (
     <>
       <MainDisplay
         playerChoice={playerChoice}
         setPlayerChoice={setPlayerChoice}
+        playerHasChosen={playerHasChosen}
+        setPlayerHasChosen={setPlayerHasChosen}
       />
-      <Buttons playerChoice={playerChoice} setPlayerChoice={setPlayerChoice} />
+      <Buttons
+        playerChoice={playerChoice}
+        setPlayerChoice={setPlayerChoice}
+        playerHasChosen={playerHasChosen}
+        setPlayerHasChosen={setPlayerHasChosen}
+      />
     </>
   );
 }

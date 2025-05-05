@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { PlayerChoiceProps } from "./types/PlayerChoiceProps";
+import { PlayerHasChosenProps } from "./types/PlayerHasChosenProps";
 
-const MainDisplay = ({ playerChoice }: PlayerChoiceProps) => {
+type MainDisplayProps = PlayerChoiceProps & PlayerHasChosenProps;
+
+const MainDisplay = ({
+  playerChoice,
+  setPlayerHasChosen,
+}: MainDisplayProps) => {
   const [computerChoice, setComputerChoice] = useState<
     undefined | "rock" | "paper" | "scissors"
   >();
@@ -57,6 +63,7 @@ const MainDisplay = ({ playerChoice }: PlayerChoiceProps) => {
       ) {
         setWins((prev) => prev + 1);
         setHasUpdatedResult(true);
+        setPlayerHasChosen(false);
       } else if (
         (computerChoice === "rock" && playerChoice === "scissors") ||
         (computerChoice === "paper" && playerChoice === "rock") ||
@@ -64,8 +71,10 @@ const MainDisplay = ({ playerChoice }: PlayerChoiceProps) => {
       ) {
         setLosses((prev) => prev + 1);
         setHasUpdatedResult(true);
+        setPlayerHasChosen(false);
       } else {
         setHasUpdatedResult(true);
+        setPlayerHasChosen(false);
       }
     }
   }, [number, playerChoice, computerChoice, hasUpdatedResult]);
